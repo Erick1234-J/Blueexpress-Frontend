@@ -1,0 +1,45 @@
+/*These Styles are also used by Sign up form*/
+
+body {
+  margin: 0;
+  font-weight: bold;
+}
+.header-text {
+  margin-top: 2rem;
+  text-align: center;
+  color: black;
+}
+.h2 {
+  margin-top: 2rem;
+}
+.sign-up-link{
+  text-decoration: none;
+}
+/* For Big and Medium Screens*/
+
+.form-container {
+
+  padding: 20px;
+  position: absolute;
+  top: 30%;
+  margin-left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+  height: 70%;
+  width: 50%;
+}
+
+/*For Small Screens*/
+@media only screen and (max-width: 600px) {
+  .form-container {
+      padding: 4rem;
+      width: 90%;
+      border: none;
+  }
+  .bottom-div{
+      margin-top: 2rem;
+  }
+
+}

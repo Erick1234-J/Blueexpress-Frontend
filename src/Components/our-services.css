@@ -1,0 +1,23 @@
+.blue_icon {
+  color: #2d88ff;
+  font-size: 50px;
+  border: 1px solid #2d88ff;
+  border-radius: 360px;
+}
+.service_icons .fa {
+  font-size: 50px;
+}
+@media (min-width: 750px) {
+  .padding_container {
+    width: 77%;
+  }
+}
+.icon-style{
+    font-size: 50px; padding: 15px;
+}
+.row-div{
+    display:flex; flex-wrap: wrap;
+}
+.header-text{
+    text-align: center;
+}
