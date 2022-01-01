@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './parcel-tracker.css'
 //React Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+import moment from 'moment';
 import axios from 'axios';
 
 
@@ -42,6 +43,7 @@ class ParcelTracker extends Component {
 }
  
   render() {
+    var time = moment(this.state.msgTime).format('MMMM Do YYYY, h:mm:ss a');
     let button = (
         <div className="heading container-fluid mt-2 bg-light pt-4 pb-4 aos-item">
             <h5>Tracking Number: </h5>
@@ -49,7 +51,7 @@ class ParcelTracker extends Component {
         <div className="card">  
             <div className="card-body mt-2">
                     <div className='container'>
-                           <h5>{this.state.msgTime}</h5>
+                           <h5>{time}</h5>
                            <h6>{this.state.msgStatus}</h6>
                     </div>
             </div>
