@@ -42,9 +42,6 @@ state = {
                 button = (
                     <div className="container mt-2 text-center">    
                         <div className="card">
-                            <div className="card-title">
-                              <h5>User Profile Settings</h5>
-                            </div>
                             <div className="card-body">
                                 <h5>
                                     Name: {this.state.user.user.name}
@@ -82,7 +79,8 @@ state = {
                     ) 
         }
     return (
-        <div className="container">
+        <div className="heading container-fluid mt-2 bg-light pt-4 pb-4 aos-item">
+             <h5>User Profile Settings</h5>
             {button}
         </div>    
     )

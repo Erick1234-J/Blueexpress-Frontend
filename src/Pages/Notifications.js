@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
+import { Link, Navigate } from 'react-router-dom';
 import axios from 'axios';
 class Notifications extends Component{
 
@@ -29,34 +28,33 @@ state = {
              updated_at: res.data.parcel.updated_at
          });
      }).catch(err => {
-         console.log(err);
+         if(err.response.data.message){
+             this.setState({error: err.response.data.message});
+         }
+         console.log(err.response.data.message);
      });
  }
 
    render(){
-       var time = moment(this.state.updated_at).fromNow();
+       
     
       
        let button;
-       if(this.state.user){
+       if(this.state.error){
+        return <Navigate to="/login" />
+     }else if(this.state.user){
          button = (
             <div className="card-body">
             {this.state.user.map(item => {
                 return (
-                    <h6 key={item.id}>Tracking Number: {item.Reference} <br></br>{item.Status} {time} </h6>
+                    <h6 key={item.id}>Tracking Number: {item.Reference} <br></br>{item.Status} {item.updated_at} </h6>
                 )
             })}
           </div>
          )
-       }else{
-           button = (
-               <div className="card-body">
-                   <h6>No notifications yet</h6>
-               </div>
-           )
        }
     return(
-        <div className="container">
+        <div className="heading container-fluid mt-2 bg-light pt-4 pb-4 aos-item">
          <div className="row mt-2">
           <div className="col-md-12">     
          <div className="card">

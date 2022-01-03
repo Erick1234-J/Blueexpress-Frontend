@@ -7,7 +7,6 @@ import axios from 'axios';
  class LoginForm extends Component {
 
      state = {
-         msg: '',
          isLoading: '',
          loggedIn: false
         
@@ -31,33 +30,52 @@ import axios from 'axios';
                 
                 localStorage.setItem('token', res.data.token);
                 this.setState({ 
-                    msg: res.data.message,
                     loggedIn: true,
                     email: '',
                     password: ''
                 });  
                
             }
-             if(res.data.status === 401){
-                 this.setState({msg: 'whoops! wrong credentials! try again'})
-             }   
+              if(res.data.status === 401){
+                 this.setState({msg: 'whoops! your password is wrong! try again'})
+              }   
              
             
         }).catch(err => {
             
-            console.log(err.message);
+            this.setState({ isLoading: false });
+            if(err.response.data.message){
+                this.setState({message: "email is incorrect! enter your valid email"});
+            }
+           
         });
     }
 
    
     render() {
+    let err = '';
+    let msg = '';
+    if(this.state.message){
+        err = (
+            <div className="alert alert-danger" role="alert">
+                {this.state.message}
+             </div> 
+        )
         
-        const isLoading = this.state.isLoading;
-        const message = this.state.msg;
+    }else if(this.state.msg){
+        msg = (
+            <div className="alert alert-danger" role="alert">
+                {this.state.msg}
+            </div>
+        )
        
+    }
+        
+    const isLoading = this.state.isLoading; 
      if(this.state.loggedIn){
          return <Navigate to="/" />
      }
+     
         return (
             <div className="d-flex p-2 form-container">  
             <div className='header-text'>
@@ -65,6 +83,8 @@ import axios from 'axios';
                 
                 <p className='h2'>Sign into your Account</p>
             </div>
+           {msg}
+           {err} <br></br>
             <form onSubmit={this.handleInput}>
                 <div className="mb-3">
                     <label htmlFor="UserEmailOrPhone" className="form-label">Email address</label>
@@ -86,10 +106,9 @@ import axios from 'axios';
                         <span></span>
                     )}
                     </button>
-                <br />
-                 <span>{message}</span>
+                <br></br><br></br>
                 <div className='bottom-div'>
-                    <p>Don't have an Account ?<Link to='/signup' className='sign-up-link'>  Sign Up</Link></p>
+                    <p>Don't have an Account ?<Link to='/signup' className='sign-up-link'>  Sign Up</Link></p>   
                 </div>
             </form>
           

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Navigate} from 'react-router-dom';
 //Parcel Tracker CSS
 import './parcel-tracker.css'
 //React Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import moment from 'moment';
 import axios from 'axios';
 
 
@@ -36,14 +36,20 @@ class ParcelTracker extends Component {
             this.setState({msgTime: res.data.data.updated_at});
              console.log(res);
         }).catch(err => {
-             console.log(err);
-        });
+            this.setState({isLoading: false});
+            if(err.response.data.message){
+                this.setState({error: err.response.data.message});
+              
+            }});
         
     
 }
  
   render() {
-    var time = moment(this.state.msgTime).format('MMMM Do YYYY, h:mm:ss a');
+      if(this.state.error){
+         return <Navigate to="/login" />
+      }
+    
     let button = (
         <div className="heading container-fluid mt-2 bg-light pt-4 pb-4 aos-item">
             <h5>Tracking Number: </h5>
@@ -51,14 +57,15 @@ class ParcelTracker extends Component {
         <div className="card">  
             <div className="card-body mt-2">
                     <div className='container'>
-                           <h5>{time}</h5>
+                           <h5>{this.state.msgTime}</h5>
                            <h6>{this.state.msgStatus}</h6>
                     </div>
             </div>
         </div>
        </div>
     )
-   const isLoading = this.state.isLoading;  
+   const isLoading = this.state.isLoading; 
+    
 
    
     return (
@@ -106,7 +113,7 @@ class ParcelTracker extends Component {
             
         </div>
         {button}
-        <span></span>
+        
     </div>  
     )
   }

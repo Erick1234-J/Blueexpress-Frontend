@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
+import { Navigate} from 'react-router-dom';
 import axios from 'axios';
 
 class ShipmentForm extends Component {
 
-    state = {
-       user: '',
-       isLoading: ''
-    };
-    saveParcel = (e) => {
-        e.preventDefault();
-
-        const data = {
+   
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            user: '',
+            isLoading: '',
+           
+        }
+    }
+    
+        saveParcel = (e) => {
+            e.preventDefault();
+    
+         const  data = {
             From: this.From,
             To: this.To,
             ShipDetails: this.ShipDetails,
@@ -19,42 +27,64 @@ class ShipmentForm extends Component {
             Email: this.Email,
             FirstName: this.FirstName,
             LastName: this.LastName
+           }
+           
+    
+            this.setState({isLoading: true});
+            let token = localStorage.getItem('token');
+                axios({
+                    method: 'post',
+                    url: 'http://localhost:8000/api/submit_parcels',
+                    data: data,
+                    headers: {
+                     'Authorization': `Bearer ${token}`,
+                     'Accept': 'application/json',
+                     'Content-Type': 'application/json'
+                    }
+                }).then(res => {
+                    if(res.data.status === 200){
+                       // console.log(res.data);
+                        this.setState({isLoading: false});
+                        this.setState({
+                           user: res.data.message,
+                           data: []
+                        });
+                  }     
+                    }).catch(err => {
+                        this.setState({isLoading: false});
+                         if(err.response.data.message){
+                             this.setState({error: err.response.data.message});
+                           
+                         }});
+             
         }
-
-        this.setState({isLoading: true});
-        let token = localStorage.getItem('token');
-        axios({
-            method: 'post',
-            url: 'http://localhost:8000/api/submit_parcels',
-            data: data,
-            headers: {
-             'Authorization': `Bearer ${token}`,
-             'Accept': 'application/json',
-             'Content-Type': 'application/json'
-            }
-        }).then(res => {
-                console.log(res.data);
-                this.setState({isLoading: false});
-                this.setState({
-                   user: res.data.message
-                });
-                
-            }).catch(err => {
-                console.log(err);
-            });
-      
-    }
+   
+   
 
     render() {
 
+       
+
        const isLoading = this.state.isLoading;
-        const message = this.state.user;
+        let message = '';
+       
+        if(this.state.error){
+           return <Navigate to="/login" />
+        }else if(this.state.user){
+            message = (
+                <div className="alert alert-success" role="alert">
+                   {this.state.user}
+                </div>
+            )
+            
+        }
         return (
         <div>
                   <h4 className="heading container-fluid mt-4 mb-2 aos-item " >Fill the form to
                 ship</h4>
-
+                
             <div className="shipping container-fluid bg-light mt-4 pb-4 aos-item " >
+                
                 <form onSubmit={this.saveParcel} className="row g-3">
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -93,7 +123,7 @@ class ShipmentForm extends Component {
                     
                     <div className="col-12">
                         <button type="submit" className="btn btn-primary btn-lg">
-                            Submit
+                            Submit <br></br>
                             {isLoading ? (
                       <span  className="spinner-border spinner-border-sm ml-5"
                       role="status"
@@ -103,9 +133,10 @@ class ShipmentForm extends Component {
                     )}
                             </button>
                     </div>
-                </form>
+                </form><br></br>
+                 {message}
+                 
             </div>
-            <span>{message}</span>
         </div>
         )
     }

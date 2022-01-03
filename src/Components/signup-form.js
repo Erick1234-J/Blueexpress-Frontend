@@ -37,22 +37,41 @@ export class SignUpForm extends Component {
                 setTimeout(() => {
                    this.setState({ msg: '' });
                 }, 4000);
+            } 
+        }).catch(err => {
+            this.setState({ isLoading: false});
+            if(err.response.data.errors){
+                this.setState({error: err.response.data.errors.password_confirmation,
+                               errorTwo: err.response.data.errors.email
+                });
             }
-
-            if(res.data.status === 'failed'){
-                this.setState({ msg: res.data.message });
-                setTimeout(() => {
-                    this.setState({ msg: '' });
-                }, 4000);
-            }
-            console.log(res);
-            
         });
 
     }
     render() {
         const isLoading = this.state.isLoading;
-        const message = this.state.msg;
+        let message = '';
+        let error = '';
+        let errorTwo = '';
+        if(this.state.msg){
+           message = (
+            <div className="alert alert-success" role="alert">
+               {this.state.msg}
+            </div> 
+           )
+        }else if(this.state.error){
+           error = (
+            <div className="alert alert-danger" role="alert">
+              {this.state.error}
+            </div> 
+           )
+        }else if(this.state.errorTwo){
+              errorTwo = (
+                <div className="alert alert-danger" role="alert">
+                   {this.state.errorTwo}
+                </div>
+              )
+        }
         return (
             <div className="d-flex p-2 form-container">
             <div className='header-text'>
@@ -60,10 +79,13 @@ export class SignUpForm extends Component {
                 
                 <p className='h2'>Create an Account</p>
             </div>
+            {message}
+            {error}
+            {errorTwo}
             <form onSubmit={this.handleInput}>
             <div className="mb-3">
                     <label htmlFor="Username" className="form-label">User name: </label>
-                    <input type="text" className="form-control"  placeholder='Enter your full names' onChange={e => this.name = e.target.value }  required/>
+                    <input type="text" className="form-control"  placeholder='Enter your full name or username' onChange={e => this.name = e.target.value }  required/>
                     
                 </div>
                 <div className="mb-3">
@@ -89,9 +111,7 @@ export class SignUpForm extends Component {
                         <span></span>
                     )}
                     </button>
-                <br />
-                <span> {message}</span>
-               
+             <br></br>        
                 <div class='bottom-div'>
                     <p>Already Have an Account ?<Link to='/login'>  Login</Link></p>
                 </div>
