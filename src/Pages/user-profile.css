@@ -1,1 +1,79 @@
 
+#top-div{
+    height: 60px;
+    background-color: #2d88ff;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+a{
+    text-decoration: none;
+    font-weight: bolder;
+}
+a:hover{
+    color: green;
+}
+.text{
+    font-weight: bolder;
+}
+button{
+    background-color: #2d88ff;
+    margin-left: 4%;
+    border-radius: 1%;
+}
+#notif-div{
+    margin-top: 10%;
+}
+#logout-btn{
+    margin-top: 10%;
+    background-color: red;
+}
+/*Styles for Big Screens*/
+@media screen and (min-width: 600px){
+    body{
+        margin: 0%;
+    }
+    #top-div{
+        margin-top: 0px;
+        height: 90px;
+    }
+    h1{
+        padding-left: 10px;
+    }
+    
+    #profile-div{
+        margin-top: 60px;
+        margin-left: 0%;
+        padding-left: 20px;
+        width: 60%;
+    }
+    #notif-div{
+        margin-top: 40px;
+        width: 40%;
+        margin-left: 35px;
+    }
+    #notif-div button{
+        width: 90px;
+        background-color: #2d88ff;
+        color: black;
+        margin-top: 15px;
+        font-weight: bold;
+        border-radius: 4px;
+    }
+    #logout-btn{
+        background-color: red;
+        margin-left: 15%;
+        margin-top: 35px;;
+        width: 20%;
+        height: 50px;
+        border-radius: 4px;
+        color: white;
+        font-weight: bold;
+    }
+    #logout-btn:hover{
+        font-weight: bold;
+        background-color: #2d88ff;
+        border-radius: 4px;
+        color: black;
+    }
+}

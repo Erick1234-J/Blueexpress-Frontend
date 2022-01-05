@@ -1,88 +1,47 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router-dom';
-import "./user-profile.css";
-import axios from 'axios';
+import BottomNav from '../Components/Layout/bottom-nav';
+import UserInProfile from '../Components/userInProfile';
+import UserOutProfile from '../Components/userOutProfile';
+
+
+
+import './user-profile.css'
+
 
 class UserProfile extends Component {
 
-        
-state = {
-     
-};
-
- componentDidMount(){
-  let token = localStorage.getItem('token');
-     axios('http://localhost:8000/api/user',{
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-     })
-     .then(res => {
-         console.log(res.data);
-         this.setState({
-             user: res.data
-         });
-     }).catch(err => {
-         console.log(err);
-     });
- }
 
  
- 
-   
-    render(){
-       
+ render (){
+    let token = localStorage.getItem('token'); 
+ return (
+    <div>
 
-        let button;
-        if(this.state.user){
-           
-                button = (
-                    <div className="container mt-2 text-center">    
-                        <div className="card">
-                            <div className="card-body">
-                                <h5>
-                                    Name: {this.state.user.user.name}
-                                </h5>
-                                <h5>
-                                    Email: {this.state.user.user.email}
-                                </h5>
-                                <h5>
-                                    Account Created: {this.state.user.user.created_at}
-                                </h5>
-                                <h5>
-                                    LoggedIn: {this.state.user.user.created_at}
-                                </h5>
-                                <h5>
-                                    Parcels available: <span className="badge"></span>{this.state.user.data}
-                                </h5>
-                                {this.state.user.track.map(num => {
-                                        return (
-                                         <h5>
-                                           Your Tracking Number:  {num.Reference}
-                                         </h5>   
-                                        )
-                                    })}
-                                
-                                <h6>
-                                    <Link to='/' className='nav-link'>Back To Home</Link>
-                                </h6>
-                                <h6>
-                                <Link to="/login" className='nav-link' onClick={() => localStorage.clear()
-                                 }> Logout</Link>
-                                </h6>
-                            </div>
-                        </div>   
-                    </div>  
-                    ) 
+        {
+            (() => {
+                if (token) {
+                    return (
+                        <div>
+                            <UserInProfile
+                                userName=''
+                                address=''
+                                defaultLocation=''
+                                parcelIntransit=''
+                                parcelReceived=''
+                                parcelWaiting=''
+                            />
+                            <BottomNav />
+                        </div>
+                    );
+                }
+                else {
+                    return(
+                        <UserOutProfile/>
+                    )
+                }
+            })()
         }
-    return (
-        <div className="heading container-fluid mt-2 bg-light pt-4 pb-4 aos-item">
-             <h5>User Profile Settings</h5>
-            {button}
-        </div>    
+    </div>
     )
   }
 }

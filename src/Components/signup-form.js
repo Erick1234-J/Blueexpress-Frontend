@@ -48,6 +48,19 @@ export class SignUpForm extends Component {
         });
 
     }
+
+    handler = () => {
+        this.clear();
+     }
+  
+     clear = () => {
+        this.setState({
+            [this.email]: "",
+            [this.password]: "",
+            [this.password]: "",
+            [this.confirm_password]: ""
+        });
+    }
     render() {
         const isLoading = this.state.isLoading;
         let message = '';
@@ -111,6 +124,9 @@ export class SignUpForm extends Component {
                         <span></span>
                     )}
                     </button>
+                    <button type="reset" className="btn btn-secondary" onClick={this.handler}>
+                       Reset
+                   </button>
              <br></br>        
                 <div class='bottom-div'>
                     <p>Already Have an Account ?<Link to='/login'>  Login</Link></p>

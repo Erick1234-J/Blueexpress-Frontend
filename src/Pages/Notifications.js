@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import BottomNav from '../Components/Layout/bottom-nav';
 import axios from 'axios';
 class Notifications extends Component{
 
@@ -60,12 +61,13 @@ state = {
          <div className="card">
           <div className="card-header">
              <h6>Notifications</h6> 
-             <h6><Link to='/' className='nav-link'>Back To Home</Link></h6>
+            
           </div>
           {button}
          </div>
          </div> 
          </div>
+         <BottomNav />
         </div>
     )
   }

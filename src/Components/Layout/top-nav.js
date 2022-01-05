@@ -25,12 +25,9 @@ state = {
         }
      })
      .then(res => {
-         console.log(res.data);
          this.setState({
              user: res.data
-         },()=> {
-            console.log('called');
-          },3000);
+         });
      }).catch(err => {
          console.log(err);
      });
@@ -51,9 +48,7 @@ state = {
                      }>Logout</Link>
                    </Dropdown.Item>
                 </DropdownButton>
-               </div> 
-               
-                
+               </div>     
             )
         }else{
            buttons = (

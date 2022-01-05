@@ -98,7 +98,7 @@ class ParcelTracker extends Component {
                 
                <input type="hidden" name="_token" value="{{ csrf_token() }}" />
                 <input className="form-control input-box" type="text" onChange={e => this.Reference = e.target.value } placeholder="Enter tracking number"
-                    aria-label="Search" />
+                    aria-label="Search" required/>
                 <button className="btn btn-outline-success btn-primary" id='track-btn' type="submit">
                     Track
                     {isLoading ? (
@@ -109,6 +109,9 @@ class ParcelTracker extends Component {
                         <span></span>
                     )}
                     </button>
+                    <button type="reset" className="btn btn-outline-success" onClick={this.handler}>
+                       Reset
+                   </button>
             </form><br/>
             
         </div>
